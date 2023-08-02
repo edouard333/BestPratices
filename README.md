@@ -5,7 +5,7 @@ Documentation centralisé de bonnes pratiques.
 ## Versionning
 Versionner le code avec la convention : `X.Y.Z`.
 
-* `X` : version majeure, incompatilibité avec la version précédente ou refonte graphique.
+* `X` : version majeure, incompatibilité avec la version précédente ou refonte graphique.
 * `Y` : version mineure, ajout de fonctionnalité.
 * `Z` : correction de bug.
 
@@ -16,7 +16,7 @@ Avoir deux branches :
 
 # Site web
 ## Endpoints
-Etant donné que de base on ne peut manipuler que des `GET` et `POST`, les endpoints contiennent dans leur l'action.
+Etant donné que de base on ne peut manipuler que des `GET` et `POST`, les endpoints contiennent dans leur URL l'action.
 
 * `GET URL/livre` : consulte liste de livre.
 * `GET/POST URL/livre/creer` : ajoute un livre (`GET` est pour avoir la page web avec le formulaire et le `POST` quand on le valide).
@@ -30,7 +30,7 @@ Idéalement, utiliser des ID sur les balises pour sélectionner l'élément (mê
 
 
 # API REST
-Il ne faut pas se faire avoir : l'API REST ne doit pas refléter les tables d'une quelconque base de données, mais chaque endpoints doit refléter le processus métier. Il peut y avoir des ressouces, mais les opérations dessus doivent refléter le processus métier (si un processus demande d'utiliser plusieurs tables DB, dans l'API cela ne doit pas être d'office le cas).
+Il ne faut pas se faire avoir : l'API REST ne doit pas refléter les tables d'une quelconque base de données, mais chaque endpoints doit refléter le processus métier. Il peut y avoir des ressources, mais les opérations dessus doivent refléter le processus métier (si un processus demande d'utiliser plusieurs tables DB, dans l'API cela ne doit pas être d'office le cas).
 
 ## Verbes HTTP et status code de réponse cas nominaux
 Respecter les règles d'API RESTfull.
@@ -55,7 +55,7 @@ Réponse nominale :
   * `204` : ressource supprimée sans réponse.
 
 **Note** :
-Certains recommandent que pour un *create* et *edit* on retourne la ressource. Mais nous laissons au client le soint de le récupérer via le endpoint adéquat. Cela permet également de forcer un test API en consommant le endpoint de récupération de la ressource. Cela évite également qu'un même endpoint réalise plusieurs actions.
+Certains recommandent que pour un *create* et *edit* on retourne la ressource. Mais nous laissons au client le soin de le récupérer via le endpoint adéquat. Cela permet également de forcer un test API en consommant le endpoint de récupération de la ressource. Cela évite également qu'un même endpoint réalise plusieurs actions.
 
 Les versions de l'API sont dans l'URL : `/api/v1/`.
 
@@ -90,14 +90,14 @@ Dans le cadre d'une liste, on retourne simplement un tableau vide `[]` et non `4
 Paramètres : `offset` et `limit` pour API.\
 `page` paramètre pour UI.\
 Avoir les paramètres dans l'URI mais après le `?` comme ça pas une nouvelle action et rend bien optionnel les info. (cas `compte/{id_compte}` et `compte/{offset}`, on fait comment la diff entre les deux routes ?) Cela permet également de garder des requêtes `GET`.\
-Les info de taille, limit, offset de la réponse sont dans le header dans les champs personnalisés, comme ça le corps de la réponse reste un tableau d'objet.
+Les informations de `taille`, `limit`, `offset` de la réponse sont dans le header dans les champs personnalisés, comme ça le corps de la réponse reste un tableau d'objet.
 
 ## Documentation
-Avoir des commentaires sur les controlleurs au minimum.
+Avoir des commentaires sur les controllers au minimum.
 
 Utiliser la documentation d'[OpenAPI](https://swagger.io/specification/).\
 Ajouter la documentation :
-1. Paramètres URL (s'il y en a), même pour ceux optionnel (pagination par exemple).
+1. Paramètres URL (s'il y en a), même pour ceux optionnels (pagination par exemple).
 2. Réponses possibles, cas nominaux : `200`, `201`, etc.
 3. Body de la requête, s'il y en a.
 4. Réponses possibles, cas non-nominaux : `400`, `401`, etc.
@@ -116,13 +116,13 @@ Liste des vérifications, des plus simple ou fondamentale au plus complexe et ch
 6. Vérifier de récupérer le **bon nombre d'élément** dans la liste.
 7. Vérifier que les données de la réponse sont **correctement structurées** : `object`, ok mais `CompteDTO` ?
 8. Vérifier que les **données de la réponse** sont ceux attendus.
-9. Vérifier des **cas non-nominaux mes techniques** : pas de body dans la requête, utiliser un mauvaise verbe, donner des champs `null`.
+9. Vérifier des **cas non-nominaux mes techniques** : pas de body dans la requête, utiliser un mauvais verbe, donner des champs `null`.
 
 **Tests "business"** :
 
-10. Vérifier un **processus métier** intégralement. Ceux nécéssitant l'utilisation de plusieurs endpoints (car, normalement, sinon cela a pu être testé dans les tests techniques).
-11. Les tests sont **relancables facilement** (sans devoir faire une opération manuel entre).
+10. Vérifier un **processus métier** intégralement. Ceux nécessitant l'utilisation de plusieurs endpoints (car, normalement, sinon cela a pu être testé dans les tests techniques).
+11. Les tests sont **relancables facilement** (sans devoir faire une opération manuelle entre).
 11. Vérifier les **cas nominaux** (simple).
 12. Vérifier les cas nominaux particuliers.
 13. Vérifier les cas non-nominaux simples : ne pas renseigner un champ 
-10. Utiliser de mauvaise données volontairement : champ vide (null ou "") pour des champs obligatoires, deux fois le même nom (qui doit être unique) de compte.
+10. Utiliser de mauvaises données volontairement : champ vide (null ou "") pour des champs obligatoires, deux fois le même nom (qui doit être unique) de compte.
