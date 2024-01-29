@@ -1,8 +1,8 @@
-# Best-pratices
-Documentation centralisé de bonnes pratiques.
+# Best-practices
+Documentation centralisée de bonnes pratiques.
 
 # Général
-## Versionning
+## Versioning
 Versionner le code avec la convention : `X.Y.Z`.
 
 * `X` : version majeure, incompatibilité avec la version précédente ou refonte graphique.
@@ -55,7 +55,7 @@ Réponse nominale :
   * `204` : ressource supprimée sans réponse.
 
 **Note** :
-Certains recommandent que pour un *create* et *edit* on retourne la ressource. Mais nous laissons au client le soin de le récupérer via le endpoint adéquat. Cela permet également de forcer un test API en consommant le endpoint de récupération de la ressource. Cela évite également qu'un même endpoint réalise plusieurs actions.
+Certains recommandent que pour un *create* et *edit* on retourne la ressource. Mais nous laissons au client le soin de le récupérer via l'endpoint adéquat. Cela permet également de forcer un test API en consommant l'endpoint de récupération de la ressource. Cela évite également qu'un même endpoint réalise plusieurs actions.
 
 Les versions de l'API sont dans l'URL : `/api/v1/`.
 
@@ -83,13 +83,13 @@ Concernant les status code d'erreur (ceux nominaux sont avec les verbes).
 * `404` : n'existe pas. Par exemple quand on veut récupérer une ressource via son ID et que rien n'existe.\
 Dans le cadre d'une liste, on retourne simplement un tableau vide `[]` et non `404` (plus simple à code des deux côtés, le serveur retourne simplement le résultat et le client ne fait que consulter un tableau vide au lieu de `404/null`).
 * `409` : conflit avec la ressource sur le serveur, elle existe déjà, 2 comptes ne peuvent pas avoir le même identifiant, etc.
-* `422` : la ressource envoyées n'est pas correctement formatée.
+* `422` : la ressource envoyée n'est pas correctement formatée.
 * `500` : erreur serveur (interne) qui n'est pas dû au client.
 
 ## Pagination
 Paramètres : `offset` et `limit` pour API.\
 `page` paramètre pour UI.\
-Avoir les paramètres dans l'URI mais après le `?` comme ça pas une nouvelle action et rend bien optionnel les info. (cas `compte/{id_compte}` et `compte/{offset}`, on fait comment la diff entre les deux routes ?) Cela permet également de garder des requêtes `GET`.\
+Avoir les paramètres dans l'URI mais après le `?` comme ça pas une nouvelle action et rend bien optionnel les infos. (cas `compte/{id_compte}` et `compte/{offset}`, on fait comment la diff entre les deux routes ?) Cela permet également de garder des requêtes `GET`.\
 Les informations de `taille`, `limit`, `offset` de la réponse sont dans le header dans les champs personnalisés, comme ça le corps de la réponse reste un tableau d'objet.
 
 ## Documentation
@@ -109,11 +109,11 @@ Liste des vérifications, des plus simple ou fondamentale au plus complexe et ch
 
 **Tests "techniques"** :
 1. Tester un maximum d'endpoint (idéalement tous). Et s'il y a de l'authentification, que cela fonctionne.
-2. Vérifier le **status code** attendu de la réponse : `200/GET`, `201/POST`, etc...
+2. Vérifier le **status code** attendu de la réponse : `200/GET`, `201/POST`, etc.
 3. Vérifier que le corps de la réponse est un `JSON` (s'il y a un corps).
 4. Vérifier que le corps de la réponse est le **type attendu** : `empty`, `object` ou `array`.
 5. Vérifier que pour une réponse contenant une liste il y ait des éléments.
-6. Vérifier de récupérer le **bon nombre d'élément** dans la liste.
+6. Vérifier de récupérer le **bon nombre d'éléments** dans la liste.
 7. Vérifier que les données de la réponse sont **correctement structurées** : `object`, ok mais `CompteDTO` ?
 8. Vérifier que les **données de la réponse** sont ceux attendus.
 9. Vérifier des **cas non-nominaux mes techniques** : pas de body dans la requête, utiliser un mauvais verbe, donner des champs `null`.
